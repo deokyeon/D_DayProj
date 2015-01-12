@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.os.Environment;
+import android.telephony.TelephonyManager;
 
 public class Utility {
 	public static boolean externalMemoryAvailable() {
@@ -41,5 +42,11 @@ public class Utility {
 		Date date = new Date(now);
 		SimpleDateFormat curDate = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 		return curDate.format(date);
+	}
+	
+	public static String getMyPhoneNumber(Context context) {
+		TelephonyManager telManager = (TelephonyManager)context.getSystemService(context.TELEPHONY_SERVICE);
+		String phoneNum = telManager.getLine1Number();
+		return phoneNum;
 	}
 }

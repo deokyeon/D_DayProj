@@ -1,12 +1,14 @@
 package com.access.d_dayproj;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import com.access.d_dayproj.content.EventDataInfo;
 import com.access.d_dayproj.database.DbOpenHelper;
+import com.access.d_dayproj.database.DdayPreference;
+import com.access.d_dayproj.sms.SMS;
 
 public class EventActivity extends Activity {
 	private Context mContext;
@@ -107,19 +111,58 @@ public class EventActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						iv.setImageDrawable(getResources().getDrawable(R.drawable.icon_check));
-						Toast.makeText(mContext, "value : " + info.getValue(), Toast.LENGTH_SHORT).show();
+						String strLastDate = DdayPreference.getEventLastDate(mContext);
+						if(!strLastDate.isEmpty() && strLastDate.compareTo("")!=0) {
+							String day;
+							String month;
+							String year;
+							
+							String hour;
+							String minute;
+							String second;
+							
+							String tempStr = strLastDate;
+							year = tempStr.substring(0, 4);
+							month = tempStr.substring(6, 8);
+							day = tempStr.substring(10, 12);
+							
+							hour = tempStr.substring(14, 16);
+							minute = tempStr.substring(18, 20);
+							second = tempStr.substring(22, 24);
+						
+							Calendar lastDate = Calendar.getInstance();
+							lastDate.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), 
+									Integer.parseInt(hour), Integer.parseInt(minute), Integer.parseInt(second));
+							
+							long diff_Result = 0;
+							diff_Result = (Calendar.getInstance().getTimeInMillis() - lastDate.getTimeInMillis()) / 1000;
+							diff_Result = diff_Result / Config.RetryTime;
+							
+							Log.i("BBB", "날짜 차이 = " + diff_Result);
+							
+							if(diff_Result <= 0) {
+								// 하루가 지나기 전
+								Toast.makeText(mContext, "하루에 한번만 할 수 있어요..!!", Toast.LENGTH_SHORT).show();
+								return;
+							}
+						}
 
-//						long now = System.currentTimeMillis();
-//						Date date = new Date(now);
-//						SimpleDateFormat curDate = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
-//						String strCurDate = curDate.format(date);
-						
+						iv.setImageDrawable(getResources().getDrawable(R.drawable.icon_check));
+						Toast.makeText(mContext, "value : " + info.getValue(),Toast.LENGTH_SHORT).show();
+
 						String strCurDate = Utility.getCurrentDate();
-						
-						mDbOpenHelper.updateColumn_EventData(position, info.getValue(), true, strCurDate);
+
+						mDbOpenHelper.updateColumn_EventData(position,info.getValue(), true, strCurDate);
+						DdayPreference.setEventLastDate(mContext, strCurDate);
+						Log.i("AAA", "preference = " + strCurDate);
 						iv.setOnClickListener(null);
 						iv.setEnabled(false);
+						
+						SMS sms = new SMS(mContext);
+						sms.sendSMS(Config.phoneNumber, info.getValue() + "을(를) 깠습니다. 지급하세요!");
+						
+						String myPhoneNum = Utility.getMyPhoneNumber(mContext);
+						sms.sendSMS(myPhoneNum, info.getValue() + "을(를) 깠습니다. 축하합니다!");
 					}
 				});
 			} else {
