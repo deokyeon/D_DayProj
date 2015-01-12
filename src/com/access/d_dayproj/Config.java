@@ -1,9 +1,12 @@
 package com.access.d_dayproj;
 
 public class Config {
-	static int certity_date_1_day = 14;
-	static int certify_date_1_month = 1;
-	static int certify_date_1_year = 1987;
+	static boolean isRelease = false;
 	
+	static int certity_date_day = 1;
+	static int certify_date_month = 1;
+	static int certify_date_year = 2015;
 	
+	static String certify_quiz_1 = "a";
+	static String certify_quez_2 = "b";
 }

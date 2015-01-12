@@ -21,8 +21,14 @@ public class SplashActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+//				Intent it = new Intent();
+//		        it.setClass(getApplicationContext(), CertifyActivity.class);
+//		        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//		        startActivity(it);
+		        
+				//for test
 				Intent it = new Intent();
-		        it.setClass(getApplicationContext(), CertifyActivity.class);
+		        it.setClass(getApplicationContext(), EventActivity.class);
 		        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		        startActivity(it);
 		        

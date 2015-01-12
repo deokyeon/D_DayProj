@@ -33,8 +33,8 @@ public class CertifyActivity extends Activity {
 				int month = dp.getMonth()+1; //Bug : January=0
 				int year = dp.getYear();
 				
-				if(day == Config.certity_date_1_day && month == Config.certify_date_1_month && year == Config.certify_date_1_year) {
-					Toast.makeText(mContext,  "Pass",  Toast.LENGTH_SHORT).show();
+				if(day == Config.certity_date_day && month == Config.certify_date_month && year == Config.certify_date_year) {
+					Toast.makeText(mContext,  "first step Pass",  Toast.LENGTH_SHORT).show();
 					
 					Intent it = new Intent();
 			        it.setClass(getApplicationContext(), Certify2Activity.class);
