@@ -1,9 +1,8 @@
 package com.access.d_dayproj;
 
 import java.io.File;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,6 +32,7 @@ public class EventActivity extends Activity {
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_activity);
         mContext = this;
@@ -108,6 +108,7 @@ public class EventActivity extends Activity {
 				iv.setImageDrawable(getResources().getDrawable(R.drawable.icon_postit));
 				iv.setOnClickListener(new OnClickListener() {
 					
+					@SuppressWarnings("deprecation")
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
@@ -126,19 +127,34 @@ public class EventActivity extends Activity {
 							month = tempStr.substring(6, 8);
 							day = tempStr.substring(10, 12);
 							
-							hour = tempStr.substring(14, 16);
-							minute = tempStr.substring(18, 20);
-							second = tempStr.substring(22, 24);
-						
+//							hour = tempStr.substring(14, 16);
+//							minute = tempStr.substring(18, 20);
+//							second = tempStr.substring(22, 24);
+//						
+//							Calendar lastDate = Calendar.getInstance();
+//							lastDate.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), 
+//									Integer.parseInt(hour), Integer.parseInt(minute), Integer.parseInt(second));
+//							
+//							long diff_Result = 0;
+//							diff_Result = (Calendar.getInstance().getTimeInMillis() - lastDate.getTimeInMillis()) / 1000;
+//							diff_Result = diff_Result / Config.RetryTime;
+							
 							Calendar lastDate = Calendar.getInstance();
-							lastDate.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), 
-									Integer.parseInt(hour), Integer.parseInt(minute), Integer.parseInt(second));
+							lastDate.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), 
+									0, 0, 0);
+							
+							long now = System.currentTimeMillis();
+							Date date = new Date(now);
+							
+							Calendar currDate = Calendar.getInstance();
+							currDate.set(date.getYear()+1900, date.getMonth()+1, date.getDate(), 
+									0, 0, 0);
 							
 							long diff_Result = 0;
-							diff_Result = (Calendar.getInstance().getTimeInMillis() - lastDate.getTimeInMillis()) / 1000;
+							diff_Result = (currDate.getTimeInMillis() - lastDate.getTimeInMillis()) / 1000;
 							diff_Result = diff_Result / Config.RetryTime;
 							
-							Log.i("BBB", "날짜 차이 = " + diff_Result);
+							Log.i(mContext.getClass().getName(), "날짜 차이 = " + diff_Result);
 							
 							if(diff_Result <= 0) {
 								// 하루가 지나기 전
@@ -159,10 +175,10 @@ public class EventActivity extends Activity {
 						iv.setEnabled(false);
 						
 						SMS sms = new SMS(mContext);
-						sms.sendSMS(Config.phoneNumber, info.getValue() + "을(를) 깠습니다. 지급하세요!");
+						sms.sendSMS(Config.phoneNumber, info.getValue() + "을(를) 획득하였습니다. 지급하세요!");
 						
 						String myPhoneNum = Utility.getMyPhoneNumber(mContext);
-						sms.sendSMS(myPhoneNum, info.getValue() + "을(를) 깠습니다. 축하합니다!");
+						sms.sendSMS(myPhoneNum, info.getValue() + "을(를) 획득하였습니다. 축하합니다!");
 					}
 				});
 			} else {
