@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +37,8 @@ public class EventActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_activity);
         mContext = this;
+        
+        startService(new Intent("com.access.d_dayproj.musicservice"));
 
         if(!Config.isRelease) {
             String _dbPath = Utility.getCacheFolder(mContext) + "/" + DbOpenHelper.DATABASE_NAME;
@@ -178,7 +181,7 @@ public class EventActivity extends Activity {
 						sms.sendSMS(Config.phoneNumber, info.getValue() + "을(를) 획득하였습니다. 지급하세요!");
 						
 						String myPhoneNum = Utility.getMyPhoneNumber(mContext);
-						sms.sendSMS(myPhoneNum, info.getValue() + "을(를) 획득하였습니다. 축하합니다!");
+						//sms.sendSMS(myPhoneNum, info.getValue() + "을(를) 획득하였습니다. 축하합니다!");
 					}
 				});
 			} else {
@@ -189,4 +192,10 @@ public class EventActivity extends Activity {
 			return convertView;
 		}
 	}
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	stopService(new Intent("com.access.d_dayproj.musicservice"));
+    }
 }

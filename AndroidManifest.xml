@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     
-    <!-- for send SMS -->
+    <!-- for send SMS  -->
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -35,6 +35,13 @@
         <activity android:name=".CertifyActivity"/>
         <activity android:name=".Certify2Activity"/>
         <activity android:name=".EventActivity"/>
+        
+        <service android:name=".MusicPlayService">
+            <intent-filter>
+                <action android:name="com.access.d_dayproj.musicservice"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class Certify2Activity extends Activity {
 	private Context mContext;
-	//private 
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
