@@ -35,6 +35,7 @@
         <activity android:name=".CertifyActivity"/>
         <activity android:name=".Certify2Activity"/>
         <activity android:name=".EventActivity"/>
+        <activity android:name=".MenuActivity"/>
         
         <service android:name=".MusicPlayService">
             <intent-filter>

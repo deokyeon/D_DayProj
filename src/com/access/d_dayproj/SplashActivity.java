@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
 		        
 				//for test
 				Intent it = new Intent();
-		        it.setClass(getApplicationContext(), EventActivity.class);
+		        it.setClass(getApplicationContext(), MenuActivity.class);
 		        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		        startActivity(it);
 		        
