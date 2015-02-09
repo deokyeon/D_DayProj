@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">D_DayProj</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
+	<string name="event_cant_send">하루에 한번만 할 수 있어요..!!</string>
+	<string name="present">선물</string>
+	<string name="event_sms_message">을(를) 획득하였습니다. 지급하세요!</string>
 </resources>
