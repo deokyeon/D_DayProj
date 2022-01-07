@@ -10,7 +10,7 @@ public class Config {
 	public static String certify_quiz_1 = "a";
 	public static String certify_quez_2 = "b";
 	
-	public static final String phoneNumber = "010-4751-9708";
+	public static final String phoneNumber = "000-0000-0000";
 	
 	public static final long RetryTime = 60*60*24;
 	public static final String PREFERENCE_NAME = "dDay_pref";
